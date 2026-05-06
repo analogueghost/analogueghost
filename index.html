@@ -17,8 +17,8 @@
       --bg-2:      #252523;
       --bg-3:      #2e2e2c;
       --cream:     #ede2d5;
-      --muted:     #aaa89f;
-      --dim:       #6a6860;
+      --muted:     #aaa89f; /* change 1: brighter */
+      --dim:       #6a6860; /* change 1: brighter */
       --border:    #2e2e2c;
       --red:       #be4632;
       --olive:     #6d7332;
@@ -96,18 +96,6 @@
       border: none;
       border-top: 1px solid var(--border);
     }
-
-    /* ── TAG PILLS ── */
-    .tag {
-      display: inline-block;
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      padding: 4px 10px;
-      border: 1px solid;
-    }
-    .tag-red    { border-color: var(--red);    color: var(--red);    }
-    .tag-olive  { border-color: var(--olive);  color: var(--olive);  }
-    .tag-purple { border-color: var(--purple); color: var(--purple); }
 
     /* ─────────────────────────────────────
        HERO
@@ -187,6 +175,10 @@
       padding: 60px 40px;
     }
 
+    .music-subsection + .music-subsection {
+      margin-top: 52px;
+    }
+
     .releases-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -213,7 +205,6 @@
       overflow: hidden;
     }
 
-    /* Replace this placeholder with an <img> of your cover art */
     .release-art-placeholder {
       font-size: 10px;
       letter-spacing: 0.1em;
@@ -231,7 +222,6 @@
       margin-top: 4px;
     }
 
-    /* Embed container — paste SoundCloud/Bandcamp iframe here */
     .embed-container {
       margin-top: 12px;
       min-height: 28px;
@@ -253,17 +243,10 @@
     }
 
     /* ─────────────────────────────────────
-       ABOUT + SHOWS
+       ABOUT
     ───────────────────────────────────── */
     #about {
       padding: 60px 40px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-    }
-
-    @media (max-width: 700px) {
-      #about { grid-template-columns: 1fr; gap: 40px; }
     }
 
     .about-text {
@@ -271,28 +254,46 @@
       color: var(--cream);
       line-height: 1.9;
       opacity: 0.85;
+      max-width: 560px;
     }
     .about-text p + p { margin-top: 14px; }
 
-    .show-list { display: flex; flex-direction: column; gap: 14px; }
-
-    .show-item {
-      border-left: 2px solid var(--red);
-      padding-left: 14px;
+    /* ─────────────────────────────────────
+       DOWNLOADS
+    ───────────────────────────────────── */
+    #downloads {
+      padding: 60px 40px;
     }
-    .show-item.nature  { border-color: var(--olive); }
-    .show-item.machine { border-color: var(--purple); }
 
-    .show-name {
-      font-size: 12px;
-      letter-spacing: 0.06em;
+    .download-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      max-width: 480px;
+    }
+
+    .download-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid var(--border);
+      padding: 16px 20px;
       color: var(--cream);
+      transition: border-color 0.2s;
     }
-    .show-meta {
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 3px;
+    .download-item:hover { border-color: var(--muted); }
+
+    .download-name {
+      font-size: 12px;
+      letter-spacing: 0.08em;
     }
+
+    .download-cta {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+    }
+    .download-cta.red   { color: var(--red);   }
+    .download-cta.olive { color: var(--olive);  }
 
     /* ─────────────────────────────────────
        CONTACT
@@ -353,7 +354,6 @@
 
     .footer-pillars {
       font-size: 10px;
-      color: var(--bg-3);
       letter-spacing: 0.12em;
     }
     .footer-pillars .h { color: var(--red);    opacity: 0.5; }
@@ -364,11 +364,11 @@
        MOBILE
     ───────────────────────────────────── */
     @media (max-width: 600px) {
-      nav, #hero, #music, #about, #contact, footer {
+      nav, #hero, #music, #about, #downloads, #contact, footer {
         padding-left: 20px;
         padding-right: 20px;
       }
-      .nav-links { gap: 20px; }
+      .nav-links { gap: 16px; }
     }
 
     /* ─────────────────────────────────────
@@ -385,7 +385,6 @@
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.25s; }
     .delay-3 { animation-delay: 0.4s; }
-    .delay-4 { animation-delay: 0.55s; }
 
   </style>
 </head>
@@ -399,6 +398,7 @@
     <ul class="nav-links">
       <li><a href="#music">[ music ]</a></li>
       <li><a href="#about">[ about ]</a></li>
+      <li><a href="#downloads">[ downloads ]</a></li>
       <li><a href="#contact">[ contact ]</a></li>
     </ul>
   </nav>
@@ -412,12 +412,12 @@
         humans — machines<br>— <span>nature.</span>
       </h1>
       <p class="hero-body fade-in delay-2">
-        a space for the random experiments of martin parks and those who want to follow along.<br>
+        a space for those who resist easy labels.<br>
         sound that sits in the discomfort between bodies and circuits.
       </p>
       <div class="hero-cta fade-in delay-3">
         <a href="#music" class="cta-primary">[ listen ]</a>
-        <a href="#about" class="cta-secondary">[ shows ]</a>
+        <a href="#downloads" class="cta-secondary">[ downloads ]</a>
         <a href="#contact" class="cta-secondary">[ contact ]</a>
       </div>
     </div>
@@ -426,105 +426,177 @@
   <hr>
 
   <!-- ── MUSIC ── -->
+  <!-- change 4: split into [ releases ] and [ dj mixes ] subsections -->
   <section id="music">
-  <p class="section-label">[ music ]</p>
 
-      <!-- RELEASE 1 — duplicate this block for each release -->
-      <div class="release-card">
-        <div class="release-art">
-          <!--
-            Replace the placeholder below with your cover art:
-            <img src="images/release-01.jpg" alt="Release title" style="width:100%;height:100%;object-fit:cover;">
-          -->
-          <span class="release-art-placeholder">cover art</span>
+    <div class="music-subsection">
+      <p class="section-label">[ releases ]</p>
+      <div class="releases-grid">
+
+        <!-- RELEASE 1 — duplicate this block for each release -->
+        <div class="release-card">
+          <div class="release-art">
+            <!--
+              Replace with your cover art image:
+              <img src="images/release-01.jpg" alt="Release title" style="width:100%;height:100%;object-fit:cover;">
+            -->
+            <span class="release-art-placeholder">cover art</span>
+          </div>
+          <p class="release-title">release title 01</p>
+          <p class="release-year">2024</p>
+          <div class="embed-container">
+            <!--
+              Paste your SoundCloud or Bandcamp embed iframe here.
+              SoundCloud example:
+              <iframe scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/YOUR_TRACK&color=%23be4632&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+              </iframe>
+            -->
+            <span class="embed-placeholder">[ paste embed here ]</span>
+          </div>
         </div>
-        <p class="release-title">release title 01</p>
-        <p class="release-year">2024</p>
-        <div class="embed-container">
-          <!--
-            Paste your SoundCloud or Bandcamp embed iframe here.
-            Example SoundCloud embed:
-            <iframe scrolling="no" frameborder="no" allow="autoplay"
-              src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/YOUR_TRACK_URL&color=%23be4632&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false"></iframe>
-          -->
-          <span class="embed-placeholder">[ paste embed here ]</span>
+
+        <!-- RELEASE 2 -->
+        <div class="release-card">
+          <div class="release-art">
+            <span class="release-art-placeholder">cover art</span>
+          </div>
+          <p class="release-title">release title 02</p>
+          <p class="release-year">2023</p>
+          <div class="embed-container">
+            <span class="embed-placeholder">[ paste embed here ]</span>
+          </div>
         </div>
+
+        <!-- RELEASE 3 -->
+        <div class="release-card">
+          <div class="release-art">
+            <span class="release-art-placeholder">cover art</span>
+          </div>
+          <p class="release-title">release title 03</p>
+          <p class="release-year">2023</p>
+          <div class="embed-container">
+            <span class="embed-placeholder">[ paste embed here ]</span>
+          </div>
+        </div>
+
+        <!-- Add more releases by copying a release-card block above -->
+
       </div>
-
-      <!-- RELEASE 2 -->
-      <div class="release-card">
-        <div class="release-art">
-          <span class="release-art-placeholder">cover art</span>
-        </div>
-        <p class="release-title">release title 02</p>
-        <p class="release-year">2023</p>
-        <div class="embed-container">
-          <span class="embed-placeholder">[ paste embed here ]</span>
-        </div>
-      </div>
-
-      <!-- RELEASE 3 -->
-      <div class="release-card">
-        <div class="release-art">
-          <span class="release-art-placeholder">cover art</span>
-        </div>
-        <p class="release-title">release title 03</p>
-        <p class="release-year">2023</p>
-        <div class="embed-container">
-          <span class="embed-placeholder">[ paste embed here ]</span>
-        </div>
-      </div>
-
-      <!-- Add more releases by copying a release-card block above -->
-
     </div>
+
+    <div class="music-subsection">
+      <p class="section-label">[ dj mixes ]</p>
+      <div class="releases-grid">
+
+        <!-- MIX 1 — same structure as releases -->
+        <div class="release-card">
+          <div class="release-art">
+            <span class="release-art-placeholder">cover art</span>
+          </div>
+          <p class="release-title">mix title 01</p>
+          <p class="release-year">2024</p>
+          <div class="embed-container">
+            <span class="embed-placeholder">[ paste embed here ]</span>
+          </div>
+        </div>
+
+        <!-- MIX 2 -->
+        <div class="release-card">
+          <div class="release-art">
+            <span class="release-art-placeholder">cover art</span>
+          </div>
+          <p class="release-title">mix title 02</p>
+          <p class="release-year">2024</p>
+          <div class="embed-container">
+            <span class="embed-placeholder">[ paste embed here ]</span>
+          </div>
+        </div>
+
+        <!-- Add more mixes by copying a release-card block above -->
+
+      </div>
+    </div>
+
   </section>
 
   <hr>
 
-  <!-- ── ABOUT + SHOWS ── -->
+  <!-- ── ABOUT ── -->
+  <!-- change 3: shows block hidden — restore by removing style="display:none" when ready -->
   <section id="about">
-
-    <div>
-      <p class="section-label">[ about ]</p>
-      <div class="about-text">
-        <!--
-          Replace this with your own bio text.
-          Keep it short — 2–3 paragraphs at most.
-          The brand voice: questioning, dry, a little unsettling.
-        -->
-        <p>
-          analogue ghost is an experimental sound artist exploring the tension between
-          human connection, machine logic, and the natural world.
-        </p>
-        <p>
-          using hardware synthesisers, field recordings, and generative processes,
-          the work asks uncomfortable questions without offering clean answers.
-        </p>
-        <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">
-          based in ——<br>
-          available for live performance, collaboration, and installation.
-        </p>
-      </div>
+    <p class="section-label">[ about ]</p>
+    <div class="about-text">
+      <!--
+        Replace with your own bio.
+        2–3 paragraphs max. Brand voice: questioning, dry, a little unsettling.
+      -->
+      <p>
+        analogue ghost is an experimental sound artist exploring the tension between
+        human connection, machine logic, and the natural world.
+      </p>
+      <p>
+        using hardware synthesisers, field recordings, and generative processes,
+        the work asks uncomfortable questions without offering clean answers.
+      </p>
+      <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">
+        based in ——<br>
+        available for live performance, collaboration, and installation.
+      </p>
     </div>
 
-    <div>
-      <p class="section-label">[ shows ]</p>
-      <div class="show-list">
-        <!--
-          One .show-item per gig.
-          Classes: default (red border) = humans theme
-                   .nature  (olive border) = nature theme
-                   .machine (purple border) = machines theme
-          Delete this section if you have no shows yet — add it back when you do.
-        -->
-        <div class="show-item machines">
-          <p class="show-name">Pedal Noise — Silencio y Ruido</p>
-          <p class="show-meta">24.04.2026 · Medellín, Colombia</p>
+    <!--
+      SHOWS — hidden until you have dates to list.
+      To restore: remove style="display:none" from the div below.
+    -->
+    <div style="display:none">
+      <p class="section-label" style="margin-top: 48px;">[ shows ]</p>
+      <div style="display:flex; flex-direction:column; gap:14px; max-width:480px;">
+        <div style="border-left:2px solid var(--red); padding-left:14px;">
+          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
+          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
+        </div>
+        <div style="border-left:2px solid var(--olive); padding-left:14px;">
+          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
+          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
+        </div>
+        <div style="border-left:2px solid var(--purple); padding-left:14px;">
+          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
+          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
         </div>
       </div>
     </div>
 
+  </section>
+
+  <hr>
+
+  <!-- ── DOWNLOADS ── -->
+  <!-- change 5: new section for sample packs and ableton live devices -->
+  <section id="downloads">
+    <p class="section-label">[ downloads ]</p>
+    <div class="download-list">
+
+      <!--
+        Replace YOUR_SAMPLE_PACK_URL with the real link
+        (Google Drive, Dropbox, Gumroad, Bandcamp, etc.)
+      -->
+      <a href="YOUR_SAMPLE_PACK_URL" target="_blank" rel="noopener" class="download-item">
+        <span class="download-name">sample packs</span>
+        <span class="download-cta red">[ download ]</span>
+      </a>
+
+      <!--
+        Replace YOUR_ABLETON_DEVICES_URL with the real link
+      -->
+      <a href="YOUR_ABLETON_DEVICES_URL" target="_blank" rel="noopener" class="download-item">
+        <span class="download-name">ableton live devices</span>
+        <span class="download-cta olive">[ download ]</span>
+      </a>
+
+      <!-- Add more items by copying an <a class="download-item"> block above -->
+
+    </div>
   </section>
 
   <hr>
@@ -535,20 +607,17 @@
     <p class="contact-note">
       for bookings, collaborations, and press enquiries:
     </p>
-    <!--
-      Replace the href and visible text with your actual email address.
-    -->
-    <a href="mailto:analogueghostmusic@gmail.com" class="contact-email">
-      analogueghostmusic@gmail.com
+    <!-- Replace href and text with your actual email address -->
+    <a href="mailto:hello@analogueghost.com" class="contact-email">
+      hello@analogueghost.com
     </a>
     <div class="social-links">
+      <!-- change 2: all external links open in a new tab -->
       <!-- Replace # with your actual profile URLs -->
-      <a href="https://analogueghost.bandcamp.com/" target="_blank" rel="noopener">bandcamp</a>
-      <a href="https://www.youtube.com/@analogueghostmusic" target="_blank" rel="noopener">youtube</a>
-      <a href="https://soundcloud.com/analogueghost" target="_blank" rel="noopener">soundcloud</a>
-      <a href="https://www.instagram.com/analogueghost/" target="_blank" rel="noopener">instagram</a>
-      <!-- ── Resident Advisor Link ── -->
-      <a href="#">resident advisor</a>
+      <a href="#" target="_blank" rel="noopener">bandcamp</a>
+      <a href="#" target="_blank" rel="noopener">soundcloud</a>
+      <a href="#" target="_blank" rel="noopener">instagram</a>
+      <a href="#" target="_blank" rel="noopener">resident advisor</a>
     </div>
   </section>
 
