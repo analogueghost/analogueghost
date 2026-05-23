@@ -7,18 +7,16 @@
   <meta name="description" content="Experimental sound artist exploring the relationship between humans, machines, and nature.">
 
   <style>
-    /* ── RESET ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
 
-    /* ── BRAND TOKENS ── */
     :root {
       --bg:        #1e1e1c;
       --bg-2:      #252523;
       --bg-3:      #2e2e2c;
-      --cream:     #ede2d5;
-      --muted:     #aaa89f; /* change 1: brighter */
-      --dim:       #6a6860; /* change 1: brighter */
+      --cream:     #f0e6d8;
+      --muted:     #c4c0b6;
+      --dim:       #8a8780;
       --border:    #2e2e2c;
       --red:       #be4632;
       --olive:     #6d7332;
@@ -26,19 +24,17 @@
       --font-mono: 'Courier New', Courier, monospace;
     }
 
-    /* ── BASE ── */
     body {
       background: var(--bg);
       color: var(--cream);
       font-family: var(--font-mono);
-      font-size: 14px;
-      line-height: 1.7;
+      font-size: 16px;
+      line-height: 1.75;
       cursor: default;
     }
 
     a { color: inherit; text-decoration: none; }
 
-    /* ── PIXEL DECAY CANVAS (hero background) ── */
     #hero-canvas {
       position: absolute;
       inset: 0;
@@ -48,7 +44,6 @@
       opacity: 0.15;
     }
 
-    /* ── NAV ── */
     nav {
       position: sticky;
       top: 0;
@@ -56,50 +51,50 @@
       background: var(--bg);
       border-bottom: 1px solid var(--border);
       padding: 0 40px;
-      height: 56px;
+      height: 60px;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
 
-    .nav-logo {
-      font-size: 14px;
-      letter-spacing: 0.06em;
-    }
-    .nav-logo .accent { color: var(--red); }
+    .nav-logo { font-size: 16px; letter-spacing: 0.06em; }
+    .nav-logo .accent-red { color: var(--red); }
 
-    .nav-links {
-      display: flex;
-      gap: 32px;
-      list-style: none;
-    }
-
+    .nav-links { display: flex; gap: 32px; list-style: none; }
     .nav-links a {
-      font-size: 11px;
+      font-size: 13px;
       letter-spacing: 0.18em;
       color: var(--muted);
       transition: color 0.2s;
     }
     .nav-links a:hover { color: var(--cream); }
 
-    /* ── SECTION LABELS ── */
     .section-label {
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.22em;
       color: var(--muted);
       text-transform: lowercase;
       margin-bottom: 28px;
     }
 
-    /* ── DIVIDER ── */
-    hr {
-      border: none;
-      border-top: 1px solid var(--border);
-    }
+    hr { border: none; border-top: 1px solid var(--border); }
 
-    /* ─────────────────────────────────────
-       HERO
-    ───────────────────────────────────── */
+    .content-tag {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.16em;
+      padding: 2px 7px;
+      border: 1px solid;
+      margin-bottom: 10px;
+      text-transform: lowercase;
+    }
+    .type-release { border-color: var(--red);    color: var(--red);    }
+    .type-ambient { border-color: var(--olive);  color: var(--olive);  }
+    .type-noise   { border-color: var(--purple); color: var(--purple); }
+    .type-sketch  { border-color: var(--dim);    color: var(--dim);    }
+    .type-mix     { border-color: var(--muted);  color: var(--muted);  }
+
+    /* ── HERO ── */
     #hero {
       position: relative;
       min-height: 72vh;
@@ -110,30 +105,32 @@
       overflow: hidden;
     }
 
-    .hero-content { position: relative; z-index: 1; max-width: 560px; }
+    .hero-content { position: relative; z-index: 1; max-width: 580px; }
 
     .hero-eyebrow {
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.22em;
       color: var(--muted);
       margin-bottom: 20px;
     }
 
     .hero-title {
-      font-size: clamp(26px, 5vw, 44px);
+      font-size: clamp(30px, 5.5vw, 50px);
       letter-spacing: 0.04em;
       line-height: 1.25;
       color: var(--cream);
       font-weight: normal;
     }
-
-    .hero-title span { color: var(--red); }
+    /* change 6: each pillar word gets its own color */
+    .hero-title .col-red    { color: var(--red);    }
+    .hero-title .col-olive  { color: var(--olive);  }
+    .hero-title .col-purple { color: var(--purple); }
 
     .hero-body {
       margin-top: 20px;
-      font-size: 13px;
+      font-size: 15px;
       color: var(--muted);
-      max-width: 420px;
+      max-width: 440px;
       line-height: 1.9;
     }
 
@@ -143,45 +140,48 @@
       gap: 12px;
       flex-wrap: wrap;
     }
-
     .hero-cta a {
-      font-size: 10px;
+      font-size: 12px;
       letter-spacing: 0.18em;
-      padding: 8px 18px;
+      padding: 9px 20px;
       border: 1px solid;
       transition: background 0.2s, color 0.2s;
     }
-    .cta-primary {
-      border-color: var(--red);
-      color: var(--red);
-    }
-    .cta-primary:hover {
-      background: var(--red);
-      color: var(--bg);
-    }
-    .cta-secondary {
-      border-color: var(--border);
-      color: var(--muted);
-    }
-    .cta-secondary:hover {
-      border-color: var(--muted);
-      color: var(--cream);
-    }
+    .cta-primary  { border-color: var(--red); color: var(--red); }
+    .cta-primary:hover  { background: var(--red); color: var(--bg); }
+    .cta-secondary { border-color: var(--border); color: var(--muted); }
+    .cta-secondary:hover { border-color: var(--muted); color: var(--cream); }
 
-    /* ─────────────────────────────────────
-       MUSIC SECTION
-    ───────────────────────────────────── */
-    #music {
-      padding: 60px 40px;
-    }
+    /* ── MUSIC ── */
+    #music { padding: 60px 40px; }
+    .music-subsection + .music-subsection { margin-top: 56px; }
 
-    .music-subsection + .music-subsection {
-      margin-top: 52px;
+    .subsection-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      margin-bottom: 28px;
+      flex-wrap: wrap;
     }
+    .subsection-header .section-label { margin-bottom: 0; }
+
+    .platform-links { display: flex; gap: 14px; align-items: center; flex-wrap: wrap; }
+    .platform-link {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      color: var(--dim);
+      border-bottom: 1px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
+      padding-bottom: 1px;
+    }
+    .platform-link:hover { color: var(--cream); border-color: var(--cream); }
+    .platform-link.red    { color: var(--red);    }
+    .platform-link.olive  { color: var(--olive);  }
+    .platform-link.purple { color: var(--purple); }
 
     .releases-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
       gap: 16px;
     }
 
@@ -198,218 +198,140 @@
       aspect-ratio: 1;
       background: var(--bg);
       border: 1px solid var(--border);
-      margin-bottom: 14px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-bottom: 12px;
       overflow: hidden;
+      position: relative;
     }
+    .release-art img {
+      width: 100%; height: 100%; object-fit: cover; display: block;
+      filter: contrast(1.1) brightness(0.85) saturate(0.7);
+      transition: filter 0.3s;
+    }
+    .release-card:hover .release-art img {
+      filter: contrast(1.2) brightness(0.95) saturate(0.85);
+    }
+    .type-release-art img  { filter: contrast(1.3) brightness(0.8)  saturate(0.6); }
+    .type-ambient-art img  { filter: contrast(0.9) brightness(0.9)  saturate(0.4); }
+    .type-noise-art img    { filter: contrast(1.5) brightness(0.7)  saturate(0.3) hue-rotate(200deg); }
+    .type-sketch-art img   { filter: contrast(0.8) brightness(0.75) saturate(0.2); }
 
     .release-art-placeholder {
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--dim);
+      width: 100%; height: 100%; min-height: 180px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; letter-spacing: 0.1em; color: var(--dim);
     }
 
-    .release-title {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-      color: var(--cream);
-    }
-    .release-year {
-      font-size: 11px;
-      color: var(--dim);
-      margin-top: 4px;
-    }
+    .release-title { font-size: 13px; letter-spacing: 0.08em; color: var(--cream); }
+    .release-year  { font-size: 12px; color: var(--dim); margin-top: 4px; }
 
     .embed-container {
-      margin-top: 12px;
-      min-height: 28px;
-      background: var(--bg);
-      border: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      margin-top: 12px; min-height: 32px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
     }
-    .embed-container iframe {
-      width: 100%;
-      border: none;
-    }
-    .embed-placeholder {
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      color: var(--dim);
-      padding: 8px;
-    }
+    .embed-container iframe { width: 100%; border: none; }
+    .embed-placeholder { font-size: 11px; letter-spacing: 0.1em; color: var(--dim); padding: 8px; }
 
-    /* ─────────────────────────────────────
-       ABOUT
-    ───────────────────────────────────── */
-    #about {
-      padding: 60px 40px;
-    }
+    /* ── PERFORMANCES ── */
+    #performances { padding: 60px 40px; }
+    .show-list { display: flex; flex-direction: column; gap: 16px; max-width: 560px; }
+    .show-item { border-left: 2px solid var(--red); padding-left: 16px; }
+    .show-item.nature  { border-color: var(--olive); }
+    .show-item.machine { border-color: var(--purple); }
+    .show-name { font-size: 14px; letter-spacing: 0.06em; color: var(--cream); }
+    .show-meta { font-size: 12px; color: var(--dim); margin-top: 4px; }
 
+    /* ── ABOUT ── */
+    #about { padding: 60px 40px; }
     .about-text {
-      font-size: 13px;
-      color: var(--cream);
-      line-height: 1.9;
-      opacity: 0.85;
-      max-width: 560px;
+      font-size: 15px; color: var(--cream);
+      line-height: 1.9; opacity: 0.9; max-width: 560px;
     }
-    .about-text p + p { margin-top: 14px; }
+    .about-text p + p { margin-top: 16px; }
 
-    /* ─────────────────────────────────────
-       DOWNLOADS
-    ───────────────────────────────────── */
-    #downloads {
-      padding: 60px 40px;
-    }
-
-    .download-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      max-width: 480px;
-    }
-
+    /* ── DOWNLOADS ── */
+    #downloads { padding: 60px 40px; }
+    .download-list { display: flex; flex-direction: column; gap: 14px; max-width: 480px; }
     .download-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border: 1px solid var(--border);
-      padding: 16px 20px;
-      color: var(--cream);
-      transition: border-color 0.2s;
+      display: flex; justify-content: space-between; align-items: center;
+      border: 1px solid var(--border); padding: 18px 22px;
+      color: var(--cream); transition: border-color 0.2s;
     }
     .download-item:hover { border-color: var(--muted); }
-
-    .download-name {
-      font-size: 12px;
-      letter-spacing: 0.08em;
-    }
-
-    .download-cta {
-      font-size: 10px;
-      letter-spacing: 0.14em;
-    }
+    .download-name { font-size: 14px; letter-spacing: 0.08em; }
+    .download-cta  { font-size: 11px; letter-spacing: 0.14em; }
     .download-cta.red   { color: var(--red);   }
     .download-cta.olive { color: var(--olive);  }
 
-    /* ─────────────────────────────────────
-       CONTACT
-    ───────────────────────────────────── */
-    #contact {
-      padding: 60px 40px;
-    }
-
+    /* ── CONTACT ── */
+    #contact { padding: 60px 40px; }
     .contact-email {
-      font-size: 16px;
-      letter-spacing: 0.06em;
-      color: var(--red);
-      margin: 12px 0 28px;
-      display: inline-block;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
+      font-size: 18px; letter-spacing: 0.06em; color: var(--red);
+      margin: 14px 0 30px; display: inline-block;
+      border-bottom: 1px solid transparent; transition: border-color 0.2s;
     }
     .contact-email:hover { border-color: var(--red); }
-
-    .contact-note {
-      font-size: 13px;
-      color: var(--muted);
-      max-width: 440px;
-      line-height: 1.8;
-    }
-
-    .social-links {
-      margin-top: 28px;
-      display: flex;
-      gap: 24px;
-    }
+    .contact-note { font-size: 15px; color: var(--muted); max-width: 440px; line-height: 1.8; }
+    .social-links { margin-top: 28px; display: flex; gap: 24px; flex-wrap: wrap; }
     .social-links a {
-      font-size: 10px;
-      letter-spacing: 0.16em;
-      color: var(--dim);
-      transition: color 0.2s;
+      font-size: 13px; letter-spacing: 0.16em; color: var(--dim); transition: color 0.2s;
     }
     .social-links a:hover { color: var(--cream); }
 
-    /* ─────────────────────────────────────
-       FOOTER
-    ───────────────────────────────────── */
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
+      padding: 22px 40px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 8px;
     }
+    .footer-copy { font-size: 12px; color: var(--dim); letter-spacing: 0.1em; }
+    .footer-pillars { font-size: 12px; letter-spacing: 0.12em; }
+    .footer-pillars .h { color: var(--red);    opacity: 0.6; }
+    .footer-pillars .n { color: var(--olive);  opacity: 0.6; }
+    .footer-pillars .m { color: var(--purple); opacity: 0.6; }
 
-    .footer-copy {
-      font-size: 10px;
-      color: var(--dim);
-      letter-spacing: 0.1em;
-    }
-
-    .footer-pillars {
-      font-size: 10px;
-      letter-spacing: 0.12em;
-    }
-    .footer-pillars .h { color: var(--red);    opacity: 0.5; }
-    .footer-pillars .n { color: var(--olive);  opacity: 0.5; }
-    .footer-pillars .m { color: var(--purple); opacity: 0.5; }
-
-    /* ─────────────────────────────────────
-       MOBILE
-    ───────────────────────────────────── */
     @media (max-width: 600px) {
-      nav, #hero, #music, #about, #downloads, #contact, footer {
-        padding-left: 20px;
-        padding-right: 20px;
+      nav, #hero, #music, #performances, #about, #downloads, #contact, footer {
+        padding-left: 20px; padding-right: 20px;
       }
       .nav-links { gap: 16px; }
+      .subsection-header { flex-direction: column; gap: 8px; }
     }
 
-    /* ─────────────────────────────────────
-       FADE-IN ON LOAD
-    ───────────────────────────────────── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(12px);
-      animation: fadeUp 0.7s ease forwards;
-    }
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
+    .fade-in { opacity: 0; transform: translateY(12px); animation: fadeUp 0.7s ease forwards; }
+    @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
     .delay-1 { animation-delay: 0.1s; }
     .delay-2 { animation-delay: 0.25s; }
     .delay-3 { animation-delay: 0.4s; }
-
   </style>
 </head>
 <body>
 
-  <!-- ── NAV ── -->
+  <!-- NAV -->
   <nav>
     <a href="#hero" class="nav-logo">
-      <span class="accent">a</span>nalogue <span class="accent">g</span>host
+      <span class="accent-red">a</span>nalogue <span class="accent-red">g</span>host
     </a>
     <ul class="nav-links">
       <li><a href="#music">[ music ]</a></li>
+      <li><a href="#performances">[ live ]</a></li>
       <li><a href="#about">[ about ]</a></li>
       <li><a href="#downloads">[ downloads ]</a></li>
       <li><a href="#contact">[ contact ]</a></li>
     </ul>
   </nav>
 
-  <!-- ── HERO ── -->
+  <!-- HERO -->
   <section id="hero">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-content">
       <p class="hero-eyebrow fade-in">[ experimental sound artist ]</p>
+      <!-- change 6: humans=red, nature=olive, machines=purple -->
       <h1 class="hero-title fade-in delay-1">
-        humans — machines<br>— <span>nature.</span>
+        <span class="col-red">humans</span> —
+        <span class="col-purple">machines</span><br>
+        — <span class="col-olive">nature.</span>
       </h1>
       <p class="hero-body fade-in delay-2">
         a space for those who resist easy labels.<br>
@@ -417,6 +339,7 @@
       </p>
       <div class="hero-cta fade-in delay-3">
         <a href="#music" class="cta-primary">[ listen ]</a>
+        <a href="#performances" class="cta-secondary">[ live ]</a>
         <a href="#downloads" class="cta-secondary">[ downloads ]</a>
         <a href="#contact" class="cta-secondary">[ contact ]</a>
       </div>
@@ -425,95 +348,144 @@
 
   <hr>
 
-  <!-- ── MUSIC ── -->
-  <!-- change 4: split into [ releases ] and [ dj mixes ] subsections -->
+  <!-- MUSIC -->
   <section id="music">
 
+    <!-- RELEASES -->
     <div class="music-subsection">
-      <p class="section-label">[ releases ]</p>
+      <div class="subsection-header">
+        <p class="section-label">[ releases ]</p>
+        <div class="platform-links">
+          <a href="https://analogueghost.bandcamp.com" target="_blank" rel="noopener" class="platform-link red">bandcamp</a>
+          <a href="https://www.youtube.com/@analogueghostmusic" target="_blank" rel="noopener" class="platform-link red">youtube</a>
+          <a href="https://www.nina.market" target="_blank" rel="noopener" class="platform-link red">nina protocol</a>
+        </div>
+      </div>
       <div class="releases-grid">
 
-        <!-- RELEASE 1 — duplicate this block for each release -->
+        <!-- RELEASE CARD — duplicate for each release -->
         <div class="release-card">
-          <div class="release-art">
+          <span class="content-tag type-release">[ release ]</span>
+          <div class="release-art type-release-art">
             <!--
-              Replace with your cover art image:
-              <img src="images/release-01.jpg" alt="Release title" style="width:100%;height:100%;object-fit:cover;">
+              <img src="images/release-01.jpg" alt="Maelstrom Xavier">
             -->
-            <span class="release-art-placeholder">cover art</span>
+            <div class="release-art-placeholder">cover art</div>
           </div>
-          <p class="release-title">release title 01</p>
+          <p class="release-title">maelstrom xavier</p>
           <p class="release-year">2024</p>
           <div class="embed-container">
             <!--
-              Paste your SoundCloud or Bandcamp embed iframe here.
-              SoundCloud example:
-              <iframe scrolling="no" frameborder="no" allow="autoplay"
-                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/YOUR_TRACK&color=%23be4632&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+              Get embed code from your Bandcamp track page → Share / Embed:
+              <iframe style="border:0;width:100%;height:42px;"
+                src="https://bandcamp.com/EmbeddedPlayer/track=YOUR_TRACK_ID/size=small/bgcol=1e1e1c/linkcol=be4632/transparent=true/"
+                seamless><a href="https://analogueghost.bandcamp.com">maelstrom xavier</a>
               </iframe>
             -->
-            <span class="embed-placeholder">[ paste embed here ]</span>
+            <span class="embed-placeholder">[ paste bandcamp embed ]</span>
           </div>
         </div>
-
-        <!-- RELEASE 2 -->
-        <div class="release-card">
-          <div class="release-art">
-            <span class="release-art-placeholder">cover art</span>
-          </div>
-          <p class="release-title">release title 02</p>
-          <p class="release-year">2023</p>
-          <div class="embed-container">
-            <span class="embed-placeholder">[ paste embed here ]</span>
-          </div>
-        </div>
-
-        <!-- RELEASE 3 -->
-        <div class="release-card">
-          <div class="release-art">
-            <span class="release-art-placeholder">cover art</span>
-          </div>
-          <p class="release-title">release title 03</p>
-          <p class="release-year">2023</p>
-          <div class="embed-container">
-            <span class="embed-placeholder">[ paste embed here ]</span>
-          </div>
-        </div>
-
-        <!-- Add more releases by copying a release-card block above -->
 
       </div>
     </div>
 
+    <!-- SKETCHES + EXPERIMENTS -->
     <div class="music-subsection">
-      <p class="section-label">[ dj mixes ]</p>
+      <div class="subsection-header">
+        <p class="section-label">[ sketches + experiments ]</p>
+        <div class="platform-links">
+          <a href="https://soundcloud.com/analogueghost" target="_blank" rel="noopener" class="platform-link olive">soundcloud</a>
+        </div>
+      </div>
+      <!--
+        CARD TYPES FOR SKETCHES:
+          type-ambient / type-ambient-art  → textured ambient experiments (olive)
+          type-noise   / type-noise-art    → noise / harsh experiments (purple)
+          type-sketch  / type-sketch-art   → demos, wip, general ideas (grey)
+      -->
       <div class="releases-grid">
 
-        <!-- MIX 1 — same structure as releases -->
         <div class="release-card">
-          <div class="release-art">
-            <span class="release-art-placeholder">cover art</span>
+          <span class="content-tag type-ambient">[ ambient ]</span>
+          <div class="release-art type-ambient-art">
+            <div class="release-art-placeholder">cover art</div>
           </div>
-          <p class="release-title">mix title 01</p>
+          <p class="release-title">sketch title</p>
           <p class="release-year">2024</p>
           <div class="embed-container">
-            <span class="embed-placeholder">[ paste embed here ]</span>
+            <!--
+              SoundCloud embed — track page → Share → Embed:
+              <iframe scrolling="no" frameborder="no" allow="autoplay"
+                src="https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/analogueghost/YOUR_TRACK&color=%236d7332&auto_play=false&hide_related=true&show_comments=false&show_user=false&show_reposts=false&show_teaser=false">
+              </iframe>
+            -->
+            <span class="embed-placeholder">[ paste soundcloud embed ]</span>
           </div>
         </div>
 
-        <!-- MIX 2 -->
         <div class="release-card">
-          <div class="release-art">
-            <span class="release-art-placeholder">cover art</span>
+          <span class="content-tag type-noise">[ noise ]</span>
+          <div class="release-art type-noise-art">
+            <div class="release-art-placeholder">cover art</div>
           </div>
-          <p class="release-title">mix title 02</p>
+          <p class="release-title">experiment title</p>
           <p class="release-year">2024</p>
           <div class="embed-container">
-            <span class="embed-placeholder">[ paste embed here ]</span>
+            <span class="embed-placeholder">[ paste soundcloud embed ]</span>
           </div>
         </div>
 
-        <!-- Add more mixes by copying a release-card block above -->
+        <div class="release-card">
+          <span class="content-tag type-sketch">[ sketch ]</span>
+          <div class="release-art type-sketch-art">
+            <div class="release-art-placeholder">cover art</div>
+          </div>
+          <p class="release-title">demo title</p>
+          <p class="release-year">2024</p>
+          <div class="embed-container">
+            <span class="embed-placeholder">[ paste soundcloud embed ]</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- DJ MIXES — change 2: links to both SoundCloud and YouTube -->
+    <div class="music-subsection">
+      <div class="subsection-header">
+        <p class="section-label">[ dj mixes ]</p>
+        <div class="platform-links">
+          <a href="https://soundcloud.com/analogueghost" target="_blank" rel="noopener" class="platform-link olive">soundcloud</a>
+          <a href="https://www.youtube.com/@analogueghostmusic" target="_blank" rel="noopener" class="platform-link red">youtube</a>
+        </div>
+      </div>
+      <!--
+        For DJ mixes, decide on a per-card basis whether to embed from
+        SoundCloud (audio only) or YouTube (if you've posted a video version).
+        You can use both embeds in the same card if you want, stacked.
+      -->
+      <div class="releases-grid">
+
+        <!-- MIX CARD — duplicate for each mix -->
+        <div class="release-card">
+          <span class="content-tag type-mix">[ mix ]</span>
+          <div class="release-art">
+            <div class="release-art-placeholder">cover art</div>
+          </div>
+          <p class="release-title">mix title</p>
+          <p class="release-year">2025</p>
+          <div class="embed-container">
+            <!--
+              Use a SoundCloud embed, or swap for a YouTube embed:
+              <iframe width="100%" height="42"
+                src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+              </iframe>
+            -->
+            <span class="embed-placeholder">[ paste soundcloud or youtube embed ]</span>
+          </div>
+        </div>
 
       </div>
     </div>
@@ -522,15 +494,34 @@
 
   <hr>
 
-  <!-- ── ABOUT ── -->
-  <!-- change 3: shows block hidden — restore by removing style="display:none" when ready -->
+  <!-- PERFORMANCES -->
+  <section id="performances">
+    <p class="section-label">[ live ]</p>
+    <div class="show-list">
+
+      <!--
+        One .show-item per performance. Most recent at top.
+        Border color:
+          default          → red    (humans theme)
+          class="nature"   → olive  (nature theme)
+          class="machine"  → purple (machines theme)
+      -->
+      <div class="show-item">
+        <p class="show-name">Pedal Noise — Silencio y Ruido</p>
+        <p class="show-meta">24.04.2026 · Medellín, Colombia</p>
+      </div>
+
+      <!-- Add more shows by copying a .show-item block above -->
+
+    </div>
+  </section>
+
+  <hr>
+
+  <!-- ABOUT -->
   <section id="about">
     <p class="section-label">[ about ]</p>
     <div class="about-text">
-      <!--
-        Replace with your own bio.
-        2–3 paragraphs max. Brand voice: questioning, dry, a little unsettling.
-      -->
       <p>
         analogue ghost is an experimental sound artist exploring the tension between
         human connection, machine logic, and the natural world.
@@ -539,89 +530,45 @@
         using hardware synthesisers, field recordings, and generative processes,
         the work asks uncomfortable questions without offering clean answers.
       </p>
-      <p style="color: var(--muted); font-size: 12px; margin-top: 20px;">
-        based in ——<br>
+      <p style="color: var(--muted); font-size: 13px; margin-top: 20px;">
+        based in Medellín, Colombia<br>
         available for live performance, collaboration, and installation.
       </p>
     </div>
-
-    <!--
-      SHOWS — hidden until you have dates to list.
-      To restore: remove style="display:none" from the div below.
-    -->
-    <div style="display:none">
-      <p class="section-label" style="margin-top: 48px;">[ shows ]</p>
-      <div style="display:flex; flex-direction:column; gap:14px; max-width:480px;">
-        <div style="border-left:2px solid var(--red); padding-left:14px;">
-          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
-          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
-        </div>
-        <div style="border-left:2px solid var(--olive); padding-left:14px;">
-          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
-          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
-        </div>
-        <div style="border-left:2px solid var(--purple); padding-left:14px;">
-          <p style="font-size:12px; letter-spacing:0.06em; color:var(--cream);">event name — venue name</p>
-          <p style="font-size:11px; color:var(--dim); margin-top:3px;">dd.mm.yyyy · city, country</p>
-        </div>
-      </div>
-    </div>
-
   </section>
 
   <hr>
 
-  <!-- ── DOWNLOADS ── -->
-  <!-- change 5: new section for sample packs and ableton live devices -->
+  <!-- DOWNLOADS -->
   <section id="downloads">
     <p class="section-label">[ downloads ]</p>
     <div class="download-list">
-
-      <!--
-        Replace YOUR_SAMPLE_PACK_URL with the real link
-        (Google Drive, Dropbox, Gumroad, Bandcamp, etc.)
-      -->
       <a href="YOUR_SAMPLE_PACK_URL" target="_blank" rel="noopener" class="download-item">
         <span class="download-name">sample packs</span>
         <span class="download-cta red">[ download ]</span>
       </a>
-
-      <!--
-        Replace YOUR_ABLETON_DEVICES_URL with the real link
-      -->
-      <a href="YOUR_ABLETON_DEVICES_URL" target="_blank" rel="noopener" class="download-item">
-        <span class="download-name">ableton live devices</span>
-        <span class="download-cta olive">[ download ]</span>
-      </a>
-
-      <!-- Add more items by copying an <a class="download-item"> block above -->
-
     </div>
   </section>
 
   <hr>
 
-  <!-- ── CONTACT ── -->
+  <!-- CONTACT -->
   <section id="contact">
     <p class="section-label">[ contact ]</p>
-    <p class="contact-note">
-      for bookings, collaborations, and press enquiries:
-    </p>
-    <!-- Replace href and text with your actual email address -->
+    <p class="contact-note">for bookings, collaborations, and press enquiries:</p>
     <a href="mailto:analogueghostmusic@gmail.com" class="contact-email">
       analogueghostmusic@gmail.com
     </a>
     <div class="social-links">
-      <!-- change 2: all external links open in a new tab -->
-      <!-- Replace # with your actual profile URLs -->
-      <a href="https://analogueghost.bandcamp.com/" target="_blank" rel="noopener">bandcamp</a>
+      <a href="https://analogueghost.bandcamp.com" target="_blank" rel="noopener">bandcamp</a>
+      <a href="https://soundcloud.com/analogueghost" target="_blank" rel="noopener">soundcloud</a>
       <a href="https://www.youtube.com/@analogueghostmusic" target="_blank" rel="noopener">youtube</a>
       <a href="https://www.instagram.com/analogueghost/" target="_blank" rel="noopener">instagram</a>
-      <a href="https://soundcloud.com/analogueghost" target="_blank" rel="noopener">soundcloud</a>
+      <a href="https://www.threads.net/@analogueghost" target="_blank" rel="noopener">threads</a>
     </div>
   </section>
 
-  <!-- ── FOOTER ── -->
+  <!-- FOOTER -->
   <footer>
     <span class="footer-copy">© analogue ghost</span>
     <span class="footer-pillars">
@@ -631,19 +578,16 @@
     </span>
   </footer>
 
-  <!-- ── PIXEL DECAY CANVAS SCRIPT ── -->
   <script>
     (function () {
       const canvas = document.getElementById('hero-canvas');
       const ctx = canvas.getContext('2d');
       const colors = ['#be4632', '#6d7332', '#675f8a', '#ede2d5'];
-
       function resize() {
         canvas.width  = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         draw();
       }
-
       function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const count = Math.floor((canvas.width * canvas.height) / 3000);
@@ -655,7 +599,6 @@
           ctx.fillRect(Math.round(x), Math.round(y), Math.round(s), Math.round(s));
         }
       }
-
       window.addEventListener('resize', resize);
       resize();
     })();
